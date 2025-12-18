@@ -55,7 +55,7 @@ jobs:
       uses: actions/download-artifact@v7
       with:
         name: build_number
-        path: build_number.txt
+        path: build_number
 
     - name: Send pull-request
       run: |
@@ -66,6 +66,5 @@ jobs:
         echo "github.ref_name"
         echo ${{ github.ref_name }}
 
-        echo "cat build_number.txt"
-        cat build_number.txt
+        ls -lath build_number
 
