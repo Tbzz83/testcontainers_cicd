@@ -22,15 +22,15 @@ jobs:
 
 
     - name: Run tests
-#        cd ratelimit 
-#        go install
-#
-#        echo "Running go test in..."
-#        pwd
-#        ls
-#        go test
       run: |
         #!/bin/bash
+        cd ratelimit 
+        go install
+
+        echo "Running go test in..."
+        pwd
+        ls
+        go test
 
         echo "Mocking a build number '$RANDOM' and uploading artifact"
         echo v1.$RANDOM > build_number.txt
@@ -48,9 +48,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#    - name: Checkout Code
-#      uses: actions/checkout@v4
-
     - name: Download build_number artifact
       uses: actions/download-artifact@v7
       with:
