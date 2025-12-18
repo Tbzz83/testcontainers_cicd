@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v6
       with:
         name: build_number
-        path: build_number.txt
+        path: testcontainers_cicd/build_number.txt
 
   modify_gitops:
     needs: build
