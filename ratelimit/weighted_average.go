@@ -16,7 +16,7 @@ func WeightedAverage(values []float64, weights []float64) (float64, error) {
 	var weightSum float64
 
 	for i := range values {
-		if weights[i] < 1 {
+		if weights[i] < 0 {
 			return 0, errors.New("weights must be non-negative")
 		}
 		sum += values[i] * weights[i]
