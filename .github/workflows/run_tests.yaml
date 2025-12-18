@@ -32,7 +32,7 @@ jobs:
         go test
 
         echo "Mocking a build number '$RANDOM' and uploading artifact"
-        echo v1.$RANDOM > build_number.txt
+        echo "v1.${RANDOM}" > build_number.txt
         cat build_number.txt
         pwd
 
