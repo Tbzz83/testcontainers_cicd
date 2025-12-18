@@ -83,6 +83,9 @@ jobs:
         sed -i "s#^\(\s*- image:\s*\).*#\1testcontainers-cicd:${BUILD_NUMBER}#" manifests/deploy_testcontainers.yaml
         cat manifests/deploy_testcontainers.yaml
 
+        git config --global user.email "cicd@gmail.com"
+        git config --global user.name "automate"
+
         # Commit the changes and push the feature branch to origin
         git add .
         git commit -m "chore: update yaml to $BUILD_NUMBER"
