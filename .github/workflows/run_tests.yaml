@@ -34,6 +34,8 @@ jobs:
 
         echo "Mocking a build number '$RANDOM' and uploading artifact"
         echo $RANDOM > build_number.txt
+        cat build_number.txt
+        pwd
 
     - name: Upload build_number artifact
       uses: actions/upload-artifact@v6
