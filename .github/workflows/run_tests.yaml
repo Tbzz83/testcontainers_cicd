@@ -76,4 +76,4 @@ jobs:
         cd $REPOSITORY
 
         git checkout -b feature_${BUILD_NUMBER}
-
+        git status
