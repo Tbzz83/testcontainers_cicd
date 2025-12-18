@@ -41,6 +41,7 @@ jobs:
         path: build_number.txt
 
   modify_gitops:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
