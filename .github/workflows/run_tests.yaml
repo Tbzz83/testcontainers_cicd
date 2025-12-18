@@ -20,16 +20,17 @@ jobs:
       with:
         go-version: "1.25"
 
+
     - name: Run tests
+#        cd ratelimit 
+#        go install
+#
+#        echo "Running go test in..."
+#        pwd
+#        ls
+#        go test
       run: |
         #!/bin/bash
-        cd ratelimit 
-        go install
-
-        echo "Running go test in..."
-        pwd
-        ls
-        go test
 
         echo "Mocking a build number '$RANDOM' and uploading artifact"
         echo $RANDOM > build_number.txt
