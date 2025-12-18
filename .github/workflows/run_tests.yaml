@@ -23,6 +23,10 @@ jobs:
     - name: Run tests
       run: |
         #!/bin/bash
+        echo "Mocking a build number '$RANDOM' and uploading artifact"
+        echo "v1.${RANDOM}" > build_number.txt
+        cat build_number.txt
+
         cd ratelimit 
         go install
 
@@ -31,16 +35,11 @@ jobs:
         ls
         go test
 
-        echo "Mocking a build number '$RANDOM' and uploading artifact"
-        echo "v1.${RANDOM}" > build_number.txt
-        cat build_number.txt
-        pwd
-
     - name: Upload build_number artifact
       uses: actions/upload-artifact@v6
       with:
         name: build_number
-        path: testcontainers_cicd/build_number.txt
+        path: build_number.txt
 
   modify_gitops:
     needs: build
