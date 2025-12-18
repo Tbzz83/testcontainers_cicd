@@ -35,7 +35,7 @@ jobs:
         echo $RANDOM > build_number.txt
 
     - name: Upload build_number artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v6
       with:
         name: build_number
         path: build_number.txt
