@@ -77,3 +77,7 @@ jobs:
 
         git checkout -b feature_${BUILD_NUMBER}
         git status
+
+        echo "Modifying deployment image using sed"
+        sed -i 's#^\(\s*- image:\s*\).*#\1testcontainers-cicd:${BUILD_NUMBER}#' manifests/deploy_testcontainers.yaml
+        cat manifests/deploy_testcontainers.yaml
