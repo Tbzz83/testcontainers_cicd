@@ -33,7 +33,7 @@ jobs:
         #!/bin/bash
 
         echo "Mocking a build number '$RANDOM' and uploading artifact"
-        echo $RANDOM > build_number.txt
+        echo v1.$RANDOM > build_number.txt
         cat build_number.txt
         pwd
 
@@ -69,15 +69,34 @@ jobs:
         BUILD_NUMBER=$(cat build_number/build_number.txt)
         REPOSITORY="testcontainers_cicd_gitops"
         CLONE_URL="https://${{ secrets.GITOPS_PAT }}@github.com/Tbzz83/${REPOSITORY}.git"
+        BRANCH_NAME=feature_${BUILD_NUMBER}
 
         echo $BUILD_NUMBER
 
         git clone ${CLONE_URL}
         cd $REPOSITORY
 
-        git checkout -b feature_${BUILD_NUMBER}
+        git checkout -b $BRANCH_NAME
         git status
 
         echo "Modifying deployment image using sed"
         sed -i "s#^\(\s*- image:\s*\).*#\1testcontainers-cicd:${BUILD_NUMBER}#" manifests/deploy_testcontainers.yaml
         cat manifests/deploy_testcontainers.yaml
+
+        # Commit the changes and push the feature branch to origin
+        git add .
+        git commit -m "chore: update yaml to $BUILD_NUMBER"
+        git push origin $BRANCH_NAME
+
+        # Store the PAT in a file that can be accessed by the
+        # GitHub CLI.
+        echo "${{ secrets.GITOPS_PAT }}" > token.txt
+
+        # Authorize GitHub CLI for the current repository and
+        # create a pull-requests containing the updates.
+        gh auth login --with-token < token.txt
+        gh pr create \
+          --body "" \
+          --title "chore: update yaml to $BUILD_NUMBER" \
+          --head "$BRANCH_NAME" \
+          --base "main"
