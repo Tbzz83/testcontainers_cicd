@@ -1,6 +1,5 @@
 name: Run Tests
 
-
 on:
   push:
     branches:
@@ -12,11 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-
 
     - name: Set up runtime
       uses: actions/setup-go@v5
@@ -33,3 +30,38 @@ jobs:
         pwd
         ls
         go test
+
+        echo "Mocking a build number '$RANDOM' and uploading artifact"
+        echo $RANDOM > build_number.txt
+
+    - name: Upload build_number artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build_number
+        path: build_number.txt
+
+  modify_gitops:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Download build_number artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: build_number
+        path: build_number.txt
+
+    - name: Send pull-request
+      run: |
+        #!/bin/bash
+        echo "github.ref:"
+        echo ${{ github.ref }}
+
+        echo "github.ref_name"
+        echo ${{ github.ref_name }}
+
+        echo "cat build_number.txt"
+        cat build_number.txt
+
