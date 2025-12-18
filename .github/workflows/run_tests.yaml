@@ -26,6 +26,10 @@ jobs:
     - name: Run tests
       run: |
         #!/bin/bash
-        echo "Hello, world"
+        cd ratelimit 
+        go install
 
-        ls -lat
+        echo "Running go test in..."
+        pwd
+        ls
+        go test
