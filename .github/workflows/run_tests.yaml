@@ -66,7 +66,14 @@ jobs:
         echo "github.ref_name"
         echo ${{ github.ref_name }}
 
-        build_number=$(cat build_number/build_number.txt)
+        BUILD_NUMBER=$(cat build_number/build_number.txt)
+        REPOSITORY="testcontainers_cicd_gitops"
+        CLONE_URL="https://Tbzz83:${{ secrets.GITOPS_PAT }}github.com/Tbzz83/${REPOSITORY}.git"
 
-        echo $build_number
+        echo $BUILD_NUMBER
+
+        git clone $CLONE_URL
+        cd $REPOSITORY
+
+        git checkout -b feature_${BUILD_NUMBER}
 
