@@ -68,11 +68,11 @@ jobs:
 
         BUILD_NUMBER=$(cat build_number/build_number.txt)
         REPOSITORY="testcontainers_cicd_gitops"
-        CLONE_URL="https://Tbzz83:${{ secrets.GITOPS_PAT }}github.com/Tbzz83/${REPOSITORY}.git"
+        CLONE_URL="https://${{ secrets.GITOPS_PAT }}github.com/Tbzz83/${REPOSITORY}.git"
 
         echo $BUILD_NUMBER
 
-        git clone $CLONE_URL
+        git clone ${CLONE_URL}
         cd $REPOSITORY
 
         git checkout -b feature_${BUILD_NUMBER}
